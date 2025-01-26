@@ -1,23 +1,30 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import mongoose from 'mongoose';
-import { Schema, model } from 'mongoose';
+import { Document } from 'mongodb';
 
-    const UserSchema = new Schema({
-        username: { type: String, required: true },
-        count: { type: Number, required: true },
-        // سایر فیلدهای مورد نیاز
-    });
 
-    const User = model('User', UserSchema);
-    const mongoURI = 'mongodb+srv://sajjadsoodmand8:sajjad@#8506@cluster0.c0gj3.mongodb.net/';
-    
-    mongoose.connect(mongoURI
-    ).then(() => {
-        console.log('Connected to MongoDB');
-    }).catch(err => {
-        console.error('Error connecting to MongoDB:', err);
-    });
+const { MongoClient } = require("mongodb");
+
+const username = encodeURIComponent("<username>");
+const count = encodeURIComponent("<count>");
+const cluster = "<Cluster>";
+const authSource = "<authSource>";
+const authMechanism = "<authMechanism>";
+let uri =
+  `mongodb+srv://${username}:${count}@${cluster}/?authSource=${authSource}&authMechanism=${authMechanism}`;
+const client = new MongoClient(uri);
+async function run() {
+  try {
+    await client.connect();
+    const database = client.db("<panad_database>");
+    const ratings = database.collection("<User>");
+    const cursor = ratings.find();
+    await cursor.forEach((doc: Document) => console.dir(doc));
+  } finally {
+    await client.close();
+  }
+}
+run().catch(console.dir);
 
  declare global {
       interface Window {
