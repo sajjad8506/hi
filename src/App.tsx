@@ -1,5 +1,24 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import mongoose from 'mongoose';
+import { Schema, model } from 'mongoose';
+
+    const UserSchema = new Schema({
+        username: { type: String, required: true },
+        count: { type: Number, required: true },
+        // سایر فیلدهای مورد نیاز
+    });
+
+    const User = model('User', UserSchema);
+    const mongoURI = 'mongodb+srv://sajjadsoodmand8:sajjad@#8506@cluster0.c0gj3.mongodb.net/';
+    
+    mongoose.connect(mongoURI
+    ).then(() => {
+        console.log('Connected to MongoDB');
+    }).catch(err => {
+        console.error('Error connecting to MongoDB:', err);
+    });
+
  declare global {
       interface Window {
         Telegram: any;
