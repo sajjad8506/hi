@@ -1,30 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { Document } from 'mongodb';
 
-
-const { MongoClient } = require("mongodb");
-
-const username = encodeURIComponent("<username>");
-const count = encodeURIComponent("<count>");
-const cluster = "<Cluster>";
-const authSource = "<authSource>";
-const authMechanism = "<authMechanism>";
-let uri =
-  `mongodb+srv://${username}:${count}@${cluster}/?authSource=${authSource}&authMechanism=${authMechanism}`;
-const client = new MongoClient(uri);
-async function run() {
-  try {
-    await client.connect();
-    const database = client.db("<panad_database>");
-    const ratings = database.collection("<User>");
-    const cursor = ratings.find();
-    await cursor.forEach((doc: Document) => console.dir(doc));
-  } finally {
-    await client.close();
-  }
-}
-run().catch(console.dir);
 
  declare global {
       interface Window {
